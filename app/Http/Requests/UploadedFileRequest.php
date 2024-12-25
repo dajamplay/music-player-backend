@@ -39,7 +39,7 @@ class UploadedFileRequest extends FormRequest
         $errors = $validator->errors();
         $response = response()->json([
             'errors' => $errors->messages(),
-        ], 400);
+        ], 403);
         throw new HttpResponseException($response);
     }
 }
