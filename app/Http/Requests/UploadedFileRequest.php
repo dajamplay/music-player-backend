@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rules\File;
+use Illuminate\Contracts\Validation\Validator;
 
 class UploadedFileRequest extends FormRequest
 {
@@ -22,7 +25,21 @@ class UploadedFileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => 'required|file|max:50000'
+            'file' => [
+                'required',
+                File::types(['mp3'])
+                    ->min(512)
+                    ->max(30 * 1024),
+            ]
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        $errors = $validator->errors();
+        $response = response()->json([
+            'errors' => $errors->messages(),
+        ], 400);
+        throw new HttpResponseException($response);
     }
 }
