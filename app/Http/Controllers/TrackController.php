@@ -24,10 +24,11 @@ class TrackController extends Controller
         return Track::query()->orderBy('updated_at','DESC')->first()->updated_at;
     }
 
-    public function addTrack(UploadedFileRequest $request): string
+    public function addTrack(UploadedFileRequest $request, UpdateTracksAction $updateTracksAction): array
     {
         $request->validated();
         $file = $request->file('file');
-        return $file->storeAs('public/music/1_all/' . $file->getClientOriginalName());
+        $file = $file->storeAs('public/music/1_all/' . $file->getClientOriginalName());
+        return $updateTracksAction->run($file);
     }
 }
