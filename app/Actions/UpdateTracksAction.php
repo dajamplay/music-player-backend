@@ -101,8 +101,9 @@ class UpdateTracksAction {
                 return '/storage' .$file_url_jpg  . '.jpg';
             }
         }
+        $numberDefaultArtwork = 1;
 
-        return '/storage/default/no_artwork.jpg';
+        return '/storage/default/' . $numberDefaultArtwork . '.jpg';
     }
 
 }
