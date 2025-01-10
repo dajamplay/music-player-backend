@@ -1,4 +1,7 @@
 *
-!artwork/
-!default/
-!music/
+!artwork/**
+!artwork
+!default
+!default/**
+!music
+!music/**
